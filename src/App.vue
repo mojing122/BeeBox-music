@@ -22,8 +22,5 @@ if(store.auth.user == null){
 </script>
 
 <style scoped>
-.ssss{
-  
-}
 
 </style>
