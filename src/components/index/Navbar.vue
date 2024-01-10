@@ -2,9 +2,9 @@
   <header class="bg-white dark:bg-gray-900 border-solid border-b dark:border-gray-500">
     <nav
       class="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8 text-gray-700 dark:text-white dark:bg-gray-900"
-      aria-label="Global">
+      aria-label="Nav">
       <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
+        <a href="javascript:void(0)" @click="router.push('/index')" class="-m-1.5 p-1.5">
           <span class="sr-only">MoMusic</span>
           <img class="mx-auto h-10 w-auto hidden dark:block" src="@/assets/img/welcome/logo-white.png"
             alt="MoMusic Logo" />
@@ -43,51 +43,11 @@
         </button>
       </div>
       <PopoverGroup class="hidden lg:flex lg:gap-x-12">
-        <Popover class="relative">
-          <PopoverButton class="flex items-center gap-x-1 text-sm font-semibold leading-6 focus:outline-none">
-            音乐广场
-            <ChevronDownIcon class="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
-          </PopoverButton>
-
-          <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1"
-            enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150"
-            leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
-            <PopoverPanel
-              class="dark:bg-gray-700 absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-              <div class="p-4">
-                <div v-for="item in products" :key="item.name"
-                  class="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <div
-                    class="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                    <component :is="item.icon" class="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                      aria-hidden="true" />
-                  </div>
-                  <div class="flex-auto">
-                    <a :href="item.href" class="block font-semibold">
-                      {{ item.name }}
-                      <span class="absolute inset-0" />
-                    </a>
-                    <p class="mt-1 text-gray-600 dark:text-gray-200">
-                      {{ item.description }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div class="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 dark:bg-gray-500">
-                <a v-for="item in callsToAction" :key="item.name" :href="item.href"
-                  class="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 hover:bg-gray-100 dark:hover:bg-gray-400">
-                  <component :is="item.icon" class="h-5 w-5 flex-none text-gray-400 dark:text-gray-100"
-                    aria-hidden="true" />
-                  {{ item.name }}
-                </a>
-              </div>
-            </PopoverPanel>
-          </transition>
-        </Popover>
-
-        <a href="#" class="text-sm font-semibold leading-6">分类专区</a>
-        <a href="#" class="text-sm font-semibold leading-6">音乐人</a>
-        <a href="#" class="text-sm font-semibold leading-6">乐评</a>
+        <a href="javascript:void(0)" @click="router.push('/index')" class="text-xl font-semibold leading-6">首页</a>
+        <a href="javascript:void(0)" @click="router.push('/MusicPlayback')"
+          class="text-xl font-semibold leading-6">分类专区</a>
+        <a href="#" class="text-xl font-semibold leading-6">音乐人</a>
+        <a href="#" class="text-xl font-semibold leading-6">乐评</a>
       </PopoverGroup>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <!--深色模式切换-->
@@ -172,20 +132,9 @@
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10 dark:divide-gray-200/50">
             <div class="space-y-2 py-6">
-              <Disclosure as="div" class="-mx-3" v-slot="{ open }">
-                <DisclosureButton
-                  class="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">
-                  音乐广场
-                  <ChevronDownIcon :class="[open ? 'rotate-180' : '', 'h-5 w-5 flex-none']" aria-hidden="true" />
-                </DisclosureButton>
-                <DisclosurePanel class="mt-2 space-y-2">
-                  <DisclosureButton v-for="item in [...products, ...callsToAction]" :key="item.name" as="a"
-                    :href="item.href"
-                    class="block rounded-lg py-2 pl-6 pr-3 text-sm font-medium leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">
-                    {{ item.name }}</DisclosureButton>
-                </DisclosurePanel>
-              </Disclosure>
-              <a href="/MusicPlayback"
+              <a href="javascript:void(0)" @click="router.push('/index'); mobileMenuOpen = false"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">首页</a>
+              <a href="javascript:void(0)" @click="router.push('/MusicPlayback'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">分类专区</a>
               <a href="#"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">音乐人</a>
@@ -248,42 +197,6 @@ const logout = () => {
   })
 }
 
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
 
 const mobileMenuOpen = ref(false);
 

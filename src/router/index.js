@@ -30,26 +30,28 @@ const router = createRouter({
       path: "/index",
       name: "index",
       component: () => import("@/views/Index.vue"),
+      children: [
+        {
+          path: "/MusicPlayback",
+          name: "MusicPlayback",
+          component: () => import("@/components/index/MusicPlayback.vue"),
+        },
+      ],
     },
-    {
-      path:"/MusicPlayback",
-      name:"MusicPlayback",
-      component:()=>import("@/components/welcome/index/MusicPlayback.vue")
-    }
   ],
 });
 
-router.beforeEach((to,from,next) =>{
-  const store = useStore()
-  if(store.auth.user != null && to.name.startsWith("welcome-")){
-      next('/index')
-  }else if(store.auth.user == null && to.fullPath.startsWith('/index')){
-      next('/')
-  }else if(to.matched.length === 0){
-      next('/index')
+router.beforeEach((to, from, next) => {
+  const store = useStore();
+  if (store.auth.user != null && to.name.startsWith("welcome-")) {
+    next("/index");
+  } else if (store.auth.user == null && to.fullPath.startsWith("/index")) {
+    next("/");
+  } else if (to.matched.length === 0) {
+    next("/index");
   } else {
-      next()
+    next();
   }
-})
+});
 
 export default router;
