@@ -59,7 +59,7 @@
 <script setup>
 import { ElMessage } from "element-plus";
 import { ref } from "vue";
-import { get, post } from "@/axios";
+import { get, post } from "@/axios/index.js";
 import router from "@/router/index.js";
 import { useStore } from "@/stores/index.js";
 
