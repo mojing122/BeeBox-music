@@ -1,18 +1,8 @@
 <template>
-  <div
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 text-slate-900 dark:text-white"
-  >
+  <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 text-slate-900 dark:text-white">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img
-        class="mx-auto h-24 w-auto hidden dark:block"
-        src="@/assets/img/welcome/logo-white.png"
-        alt="MoMusic Logo"
-      />
-      <img
-        class="mx-auto h-24 w-auto dark:hidden"
-        src="@/assets/img/welcome/logo-black.png"
-        alt="MoMusic Logo"
-      />
+      <img class="mx-auto h-24 w-auto hidden dark:block" src="@/assets/img/welcome/logo-white.png" alt="MoMusic Logo" />
+      <img class="mx-auto h-24 w-auto dark:hidden" src="@/assets/img/welcome/logo-black.png" alt="MoMusic Logo" />
       <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight">
         重置密码
       </h2>
@@ -26,40 +16,21 @@
         </el-steps>
       </div>
       <div class="mt-8" v-if="active === 0">
-        <el-form
-          :model="ForgetForm"
-          :rules="rules"
-          @validate="onValidate"
-          ref="formRef"
-        >
+        <el-form :model="ForgetForm" :rules="rules" @validate="onValidate" ref="formRef">
           <el-form-item prop="email">
-            <el-input
-              v-model="ForgetForm.email"
-              type="email"
-              placeholder="邮箱地址"
-              size="large"
-            >
+            <el-input v-model="ForgetForm.email" type="email" placeholder="邮箱地址" size="large">
               <template #prefix>
-                <el-icon><Message /></el-icon>
+                <el-icon>
+                  <Message />
+                </el-icon>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="code">
-            <el-input
-              v-model="ForgetForm.code"
-              :maxlength="6"
-              placeholder="验证码"
-              type="text"
-              size="large"
-            >
+            <el-input v-model="ForgetForm.code" :maxlength="6" placeholder="验证码" type="text" size="large">
               <template #append>
-                <el-button
-                  @click="validateEmail"
-                  style="font-size: 10px"
-                  size="small"
-                  :disabled="!isEmailValid || coldTime > 0"
-                  class="get-code-button"
-                >
+                <el-button @click="validateEmail" style="font-size: 10px" size="small"
+                  :disabled="!isEmailValid || coldTime > 0" class="get-code-button">
                   {{ coldTime > 0 ? coldTime + "秒后重试" : "获取验证码" }}
                 </el-button>
               </template>
@@ -67,73 +38,48 @@
           </el-form-item>
         </el-form>
         <div style="margin-top: 30px">
-          <button
-            @click="startReset"
-            type="button"
-            class="flex w-full justify-center rounded-md bg-primary px-3 py-3 text-base font-semibold leading-6 text-black shadow-sm hover:bg-primary_d focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
+          <button @click="startReset" type="button"
+            class="flex w-full justify-center rounded-md bg-primary px-3 py-3 text-base font-semibold leading-6 text-black shadow-sm hover:bg-primary_d focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
             验证邮箱
           </button>
         </div>
         <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-100">
-          <a
-            @click="router.push('/')"
-            class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200"
-            >返回登录</a
-          >
+          <a @click="router.push('/')"
+            class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200">返回登录</a>
         </p>
       </div>
       <div class="mt-8" v-if="active === 1">
-        <el-form
-          :model="ForgetForm"
-          :rules="rules"
-          @validate="onValidate"
-          ref="formRef"
-        >
+        <el-form :model="ForgetForm" :rules="rules" @validate="onValidate" ref="formRef">
           <el-form-item prop="password">
-            <el-input
-              v-model="ForgetForm.password"
-              type="password"
-              show-password
-              :maxlength="16"
-              size="large"
-              placeholder="请设置新密码"
-            >
+            <el-input v-model="ForgetForm.password" type="password" show-password :maxlength="16" size="large"
+              placeholder="请设置新密码">
               <template #prefix>
-                <el-icon><Lock /></el-icon>
+                <el-icon>
+                  <Lock />
+                </el-icon>
               </template>
             </el-input>
           </el-form-item>
           <el-form-item prop="password_repeat">
-            <el-input
-              v-model="ForgetForm.password_repeat"
-              type="password"
-              show-password
-              :maxlength="16"
-              size="large"
-              placeholder="重复新密码"
-            >
+            <el-input v-model="ForgetForm.password_repeat" type="password" show-password :maxlength="16" size="large"
+              placeholder="重复新密码">
               <template #prefix>
-                <el-icon><Lock /></el-icon>
+                <el-icon>
+                  <Lock />
+                </el-icon>
               </template>
             </el-input>
           </el-form-item>
         </el-form>
         <div style="margin-top: 30px">
-          <button
-            @click="doReset"
-            type="button"
-            class="flex w-full justify-center rounded-md bg-indigo-400 px-3 py-3 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
+          <button @click="doReset" type="button"
+            class="flex w-full justify-center rounded-md bg-indigo-400 px-3 py-3 text-base font-semibold leading-6 text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
             重置密码
           </button>
         </div>
         <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-100">
-          <a
-            @click="router.push('/')"
-            class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200"
-            >返回登录</a
-          >
+          <a @click="router.push('/')"
+            class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200">返回登录</a>
         </p>
       </div>
     </div>
@@ -173,6 +119,7 @@ const validateEmail = () => {
       ElMessage.success(message);
       setInterval(() => coldTime.value--, 1000);
     },
+    "application/x-www-form-urlencoded",
     (message) => {
       ElMessage.warning(message);
       coldTime.value = 0;

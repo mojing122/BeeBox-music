@@ -113,7 +113,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { Howl, Howler } from 'howler';
 
 const state = ref({
     name: 'One Last Kiss',
