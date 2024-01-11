@@ -11,7 +11,12 @@ export const useStore = defineStore(
     const theme = reactive({
       themeMode: "auto",
     });
-    return { auth, theme };
+
+    const currentPaly = reactive({
+      music: "青花瓷",
+    });
+
+    return { auth, theme, currentPaly };
   },
   {
     persist: true,
