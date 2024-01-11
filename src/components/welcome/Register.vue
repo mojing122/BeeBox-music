@@ -1,106 +1,65 @@
 <template>
-  <div
-    class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 text-slate-900 dark:text-white"
-  >
+  <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 text-slate-900 dark:text-white">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img
-        class="mx-auto h-24 w-auto hidden dark:block"
-        src="@/assets/img/welcome/logo-white.png"
-        alt="MoMusic Logo"
-      />
-      <img
-        class="mx-auto h-24 w-auto dark:hidden"
-        src="@/assets/img/welcome/logo-black.png"
-        alt="MoMusic Logo"
-      />
+      <img class="mx-auto h-24 w-auto hidden dark:block" src="@/assets/img/welcome/logo-white.png" alt="MoMusic Logo" />
+      <img class="mx-auto h-24 w-auto dark:hidden" src="@/assets/img/welcome/logo-black.png" alt="MoMusic Logo" />
       <h2 class="mt-10 text-center text-3xl font-bold leading-9 tracking-tight">
         新用户注册
       </h2>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <el-form
-        class="space-y-4"
-        :model="registerForm"
-        :rules="rules"
-        @validate="onValidate"
-        ref="formRef"
-      >
+      <el-form class="space-y-4" :model="registerForm" :rules="rules" @validate="onValidate" ref="formRef">
         <el-form-item prop="username">
-          <el-input
-            v-model="registerForm.username"
-            :maxlength="10"
-            type="text"
-            placeholder="用户名"
-          >
+          <el-input v-model="registerForm.username" :maxlength="10" type="text" placeholder="用户名">
             <template #prefix>
-              <el-icon><User /></el-icon>
+              <el-icon>
+                <User />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input
-            v-model="registerForm.password"
-            type="password"
-            show-password
-            :maxlength="16"
-            placeholder="请设置密码"
-          >
+          <el-input v-model="registerForm.password" type="password" show-password :maxlength="16" placeholder="请设置密码">
             <template #prefix>
-              <el-icon><Lock /></el-icon>
+              <el-icon>
+                <Lock />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="password_repeat">
-          <el-input
-            v-model="registerForm.password_repeat"
-            type="password"
-            show-password
-            :maxlength="16"
-            placeholder="重复密码"
-          >
+          <el-input v-model="registerForm.password_repeat" type="password" show-password :maxlength="16"
+            placeholder="重复密码">
             <template #prefix>
-              <el-icon><Lock /></el-icon>
+              <el-icon>
+                <Lock />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="email">
-          <el-input
-            v-model="registerForm.email"
-            type="email"
-            placeholder="邮箱地址"
-          >
+          <el-input v-model="registerForm.email" type="email" placeholder="邮箱地址">
             <template #prefix>
-              <el-icon><Message /></el-icon>
+              <el-icon>
+                <Message />
+              </el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item prop="code">
-          <el-input
-            v-model="registerForm.code"
-            :maxlength="6"
-            placeholder="验证码"
-            type="text"
-          >
+          <el-input v-model="registerForm.code" :maxlength="6" placeholder="验证码" type="text">
             <template #append>
-              <el-button
-                @click="validateEmail"
-                style="font-size: 10px"
-                size="small"
-                :disabled="!isEmailValid || coldTime > 0"
-                class="get-code-button"
-              >
+              <el-button @click="validateEmail" style="font-size: 10px" size="small"
+                :disabled="!isEmailValid || coldTime > 0" class="get-code-button">
                 {{ coldTime > 0 ? coldTime + "秒后重试" : "获取验证码" }}
               </el-button>
             </template>
           </el-input>
         </el-form-item>
         <div class="pt-6">
-          <button
-            @click="register"
-            type="button"
-            class="flex w-full justify-center rounded-md bg-primary px-3 py-3 text-base font-semibold leading-6 text-black shadow-sm hover:bg-primary_d focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
+          <button @click="register" type="button"
+            class="flex w-full justify-center rounded-md bg-primary px-3 py-3 text-base font-semibold leading-6 text-black shadow-sm hover:bg-primary_d focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
             立即注册
           </button>
         </div>
@@ -109,11 +68,8 @@
       <p class="mt-10 text-center text-sm text-gray-500 dark:text-gray-100">
         已有账号?
         {{ " " }}
-        <a
-          @click="router.push('/')"
-          class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200"
-          >返回登录</a
-        >
+        <a @click="router.push('/')"
+          class="font-semibold leading-6 text-primary_coml hover:text-primary_comd dark:text-indigo-300 dark:hover:text-indigo-200">返回登录</a>
       </p>
     </div>
   </div>
@@ -175,6 +131,7 @@ const validateEmail = () => {
       ElMessage.success(message);
       setInterval(() => coldTime.value--, 1000);
     },
+    "application/x-www-form-urlencoded",
     (message) => {
       ElMessage.warning(message);
       coldTime.value = 0;
