@@ -44,7 +44,7 @@
       </div>
       <PopoverGroup class="hidden lg:flex lg:gap-x-12">
         <a href="javascript:void(0)" @click="router.push('/index')" class="text-xl font-semibold leading-6">首页</a>
-        <a href="javascript:void(0)" @click="router.push('/MusicPlayback')"
+        <a href="javascript:void(0)" @click="router.push('/musicPlayback')"
           class="text-xl font-semibold leading-6">分类专区</a>
         <a href="#" class="text-xl font-semibold leading-6">音乐人</a>
         <a href="#" class="text-xl font-semibold leading-6">乐评</a>
@@ -134,7 +134,7 @@
             <div class="space-y-2 py-6">
               <a href="javascript:void(0)" @click="router.push('/index'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">首页</a>
-              <a href="javascript:void(0)" @click="router.push('/MusicPlayback'); mobileMenuOpen = false"
+              <a href="javascript:void(0)" @click="router.push('/musicPlayback'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">分类专区</a>
               <a href="#"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">音乐人</a>

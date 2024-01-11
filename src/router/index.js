@@ -32,9 +32,26 @@ const router = createRouter({
       component: () => import("@/views/Index.vue"),
       children: [
         {
-          path: "/MusicPlayback",
+          path: "/musicPlayback",
           name: "MusicPlayback",
           component: () => import("@/components/index/MusicPlayback.vue"),
+        },
+      ],
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: () => import("@/views/Admin.vue"),
+      children: [
+        {
+          path: "/home",
+          name: "AdminHome",
+          component: () => import("@/components/admin/AdminHome.vue"),
+        },
+        {
+          path: "",
+          name: "UploadMusic",
+          component: () => import("@/components/admin/UploadMusic.vue"),
         },
       ],
     },

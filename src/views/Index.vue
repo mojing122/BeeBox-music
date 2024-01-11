@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import { useStore } from "@/stores/index.js";
 import Navbar from "@/components/index/Navbar.vue";
 import Player from "@/components/index/Player.vue";
