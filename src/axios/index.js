@@ -16,13 +16,14 @@ function post(
   url,
   data,
   success,
+  contentType = "application/x-www-form-urlencoded",
   failure = defaultFailure,
   error = defaultError
 ) {
   axios
     .post(url, data, {
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": contentType,
       },
       withCredentials: true,
     })

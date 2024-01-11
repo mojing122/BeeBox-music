@@ -85,28 +85,31 @@ const onMusicChange = () => {
 
 const createMusic = async () => {
     if (form.value.name == '' || form.value.artist == '' || MusicFileData.value == null || CoverFileData.value == null) {
-        ElMessage.warning("请检查信息是否填写完整")
+        ElMessage.warning("请检查信息是否填写完整");
+        return;
     }
     let data = new FormData();
     data.append("name", form.value.name);
     data.append("artist", form.value.artist);
-    data.append("flie", MusicFileData.value);
-    data.append("cover", CoverFileData.value);
+    data.append("file", MusicFileData.value || '');
+    data.append("cover", CoverFileData.value || '');
     const audio = document.querySelector('#music-preview');
-    data.append("length", audio.duration);
+    data.append("length", Math.ceil(audio.duration));
 
     if (MusicFile.value && CoverFile.value) {
         //上传
     }
 
+    // 发送POST请求上传文件  
     post(
         "/api/admin/creat-music",
         data,
         (message) => {
             ElMessage.success(message);
-
-        }
+        },
+        "multipart/form-data"
     )
+
 };
 
 const clearImg = () => {
