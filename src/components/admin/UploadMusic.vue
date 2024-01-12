@@ -47,10 +47,13 @@
                     </div>
                 </div>
             </el-form-item>
+            <el-form-item>
+                <el-button class="ml-3" type="success" @click="createMusic">
+                    保存并上传
+                </el-button>
+            </el-form-item>
         </el-form>
-        <el-button class="ml-3" type="success" @click="createMusic">
-            保存并上传
-        </el-button>
+
     </div>
 </template>
 
