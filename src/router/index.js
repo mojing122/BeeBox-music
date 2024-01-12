@@ -32,9 +32,19 @@ const router = createRouter({
       component: () => import("@/views/Index.vue"),
       children: [
         {
+          path: "",
+          name: "HomePage",
+          component: () => import("@/components/index/HomePage.vue"),
+        },
+        {
           path: "/musicPlayback",
           name: "MusicPlayback",
           component: () => import("@/components/index/MusicPlayback.vue"),
+        },
+        {
+          path: "/listDetail/",
+          name: "ListDetail",
+          component: () => import("@/components/index/ListDetail.vue"),
         },
       ],
     },
@@ -58,6 +68,7 @@ const router = createRouter({
   ],
 });
 
+/**
 router.beforeEach((to, from, next) => {
   const store = useStore();
   if (store.auth.user != null && to.name.startsWith("welcome-")) {
@@ -70,5 +81,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+ */
 
 export default router;
