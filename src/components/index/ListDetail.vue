@@ -12,7 +12,7 @@
                         <div>
                             <div class="flex justify-between">
                                 <h4 class="text-2xl">
-                                    <p class="font-medium hover:text-gray-800">{{
+                                    <p class="font-medium">{{
                                         ListRef.name
                                     }}</p>
                                 </h4>
@@ -21,8 +21,8 @@
                         </div>
                         <div class="ml-4" v-if="!ListRef.editable">
                             <button type="button" @click="favourite()" class="text-lg px-8 py-4 rounded-md font-bold"
-                                :class="!ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
-                                <p v-if="ListRef.isFavourite">收藏歌单</p>
+                                :class="ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
+                                <p v-if="!ListRef.isFavourite">收藏歌单</p>
                                 <p v-else>取消收藏</p>
                             </button>
                         </div>
@@ -44,18 +44,19 @@ import router from "@/router";
 import { ref } from "vue";
 import formatTimeTool from "@/tools/timeTools.js"
 import MusicList from '@/components/index/MusicList.vue'
+import { get, post } from "@/axios/index.js";
+const staticPath = 'http://localhost:8080'
 
-
-const listId = router.currentRoute.value.query['listiId'];
+const listId = router.currentRoute.value.query['id'];
 
 
 const ListRef = ref({
     name: '推荐歌单',
     description: '编辑精选推荐',
     listlength: 3,
-    cover: 'https://img0.baidu.com/it/u=3453325096,794529085&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
+    cover: '/imageholder/96*96.png',
     isFavourite: true,
-    editable: true,
+    editable: false,
     music_list: [{
         music_id: 1,
         name: ' 青花瓷',
@@ -80,6 +81,24 @@ const ListRef = ref({
 const favourite = () => {
     ListRef.value.isFavourite = !ListRef.value.isFavourite;
 }
+
+post(
+    "/api/playlist/get-music-by-playlistid",
+    {
+        playlistId: listId
+    },
+    (message) => {
+        console.log(message)
+        ListRef.value.name = message.name;
+        ListRef.value.cover = staticPath + message.cover;
+        ListRef.value.description = message.description;
+        ListRef.value.listlength = message.musicList.length;
+        ListRef.value.isFavourite = (message.isLiked > 0) ? true : false;
+        ListRef.value.editable = message.editable;
+
+
+    }
+);
 
 
 
