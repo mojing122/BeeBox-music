@@ -16,8 +16,8 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr v-for="music in  musics " :key="music.email">
-                        <td class="py-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none ">
+                    <tr v-for="music in  musics " :key="music.id">
+                        <td @click="PlayMusic(music)" class="py-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none ">
                             {{ music.name }}
                         </td>
                         <td class="px-3 py-4 text-sm text-gray-500 ">{{ music.artist }}</td>
@@ -87,6 +87,17 @@ import {
 import {
     HeartIcon as HeartIconSolid,
 } from "@heroicons/vue/24/solid";
+import { useStore } from "@/stores/index.js";
+
+const store = useStore();
+
+const PlayMusic = (item) => {
+    console.log(item)
+    store.currentPaly.name = item.name;
+    store.currentPaly.artist = item.artist;
+    store.currentPaly.cover = item.cover;
+    store.currentPaly.file_url = item.file_url;
+}
 
 const like = (music) => {
     music.is_liked = !music.is_liked;

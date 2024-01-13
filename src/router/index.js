@@ -54,12 +54,12 @@ const router = createRouter({
       component: () => import("@/views/Admin.vue"),
       children: [
         {
-          path: "/home",
+          path: "",
           name: "AdminHome",
           component: () => import("@/components/admin/AdminHome.vue"),
         },
         {
-          path: "",
+          path: "/admin/uploadMusic",
           name: "UploadMusic",
           component: () => import("@/components/admin/UploadMusic.vue"),
         },

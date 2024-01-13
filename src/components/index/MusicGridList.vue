@@ -28,11 +28,12 @@ import { useStore } from "@/stores/index.js";
 const store = useStore();
 
 const PlayMusic = (item) => {
-    console.log(item)
+    store.currentPaly.id = item.id;
     store.currentPaly.name = item.name;
     store.currentPaly.artist = item.artist;
     store.currentPaly.cover = item.cover;
     store.currentPaly.file_url = item.file_url;
+    store.currentPaly.isLiked = item.is_liked
 }
 
 </script>

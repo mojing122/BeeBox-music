@@ -20,7 +20,7 @@
                             <p class="mt-1  text-gray-500">{{ ListRef.listlength }}首音乐</p>
                         </div>
                         <div class="ml-4" v-if="!ListRef.editable">
-                            <button type="button" @click="favourite()" class="text-lg px-8 py-4 rounded-md font-bold"
+                            <button type="button" @click="favourite()" class="px-2 py-4 w-[80px] rounded-md font-bold"
                                 :class="ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
                                 <p v-if="!ListRef.isFavourite">收藏歌单</p>
                                 <p v-else>取消收藏</p>
@@ -81,9 +81,11 @@ post(
             let line = {};
             line.music_id = music.id;
             line.name = music.name;
-            line.artist = music.artistId;
+            line.artist = music.artist;
             line.length = formatTimeTool(music.length);
-            //line.isLiked = music.isLike;
+            line.is_liked = music.isLiked;
+            line.file_url = staticPath + music.fileUrl;
+            line.cover = staticPath + music.cover;
             console.log(line)
             ListRef.value.music_list.push(line)
         }

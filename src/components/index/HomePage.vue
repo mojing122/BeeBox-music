@@ -59,7 +59,7 @@ get(
             let item = {}
             item.id = message[i].id;
             item.name = message[i].name;
-            item.description = message[i].desc;
+            item.description = message[i].description;
             item.cover = staticPath + message[i].cover;
             playLists.value.push(item)
         }
@@ -83,7 +83,7 @@ post(
             item.description = message[i].desc;
             item.cover = staticPath + message[i].cover;
             item.file_url = staticPath + message[i].fileUrl;
-            item.artist = '网络歌手'
+            item.artist = message[i].artist
             musics.value.push(item)
         }
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mt-10">
         <el-form :model="form" label-width="120px">
             <el-form-item label="音乐名">
                 <el-input v-model="form.name" />
@@ -109,6 +109,11 @@ const createMusic = async () => {
         data,
         (message) => {
             ElMessage.success(message);
+            form.value.name = '';
+            form.value.artist = '';
+            clearImg();
+            clearMusic();
+
         },
         "multipart/form-data"
     )

@@ -13,6 +13,7 @@ export const useStore = defineStore(
     });
 
     const currentPaly = reactive({
+      id: 0,
       name: "暂无播放",
       artist: "未知歌手",
       cover: "/default_cover.jpeg",

@@ -1,10 +1,12 @@
 <template>
-    <div>
+    <div class="flex flex-row">
+        <Menu />
         <RouterView />
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+import Menu from '../components/admin/Menu.vue';
 
 </script>
 
