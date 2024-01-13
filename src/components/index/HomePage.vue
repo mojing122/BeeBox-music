@@ -24,7 +24,7 @@
             </div>
 
             <div>
-                <GridList :List="musics" />
+                <MusicGridList :List="musics" />
             </div>
         </div>
     </div>
@@ -32,8 +32,10 @@
 
 <script setup>
 import GridList from '@/components/index/GridList.vue';
+import MusicGridList from './MusicGridList.vue';
 import { get, post } from "@/axios/index.js";
 import { ref } from 'vue';
+
 const staticPath = 'http://localhost:8080'
 
 const playLists = ref([
@@ -43,73 +45,46 @@ const playLists = ref([
         description: '每日精选推荐',
         cover:
             'http://localhost:8080/cover/recommend.jpg',
-    },
-    {
-        id: 2,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 3,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 4,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
+    }
 
 ])
 
-const musics = ref([
-    {
-        id: 1,
-        name: '每日推荐',
-        description: '每日精选推荐',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 2,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 3,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-    {
-        id: 4,
-        name: 'null',
-        description: 'null',
-        cover:
-            'https://images.unsplash.com/photo-1582053433976-25c00369fc93?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=512&q=80',
-    },
-
-])
+const musics = ref([])
 
 
 get(
     "/api/playlist/get-playlist?limit=3&offset=0",
     (message) => {
-        console.log(message)
         for (let i = 0; i < 3; i++) {
-            playLists.value[i + 1].id = message[i].id;
-            playLists.value[i + 1].name = message[i].name;
-            playLists.value[i + 1].description = message[i].desc;
-            playLists.value[i + 1].cover = staticPath + message[i].cover;
+            let item = {}
+            item.id = message[i].id;
+            item.name = message[i].name;
+            item.description = message[i].desc;
+            item.cover = staticPath + message[i].cover;
+            playLists.value.push(item)
+        }
+
+    }
+
+);
+
+post(
+    "/api/music/get-musicList-by-likeCount",
+    {
+        limit: 8,
+        offset: 0
+    },
+    (message) => {
+        console.log(message)
+        for (let i = 0; i < 8; i++) {
+            let item = {}
+            item.id = message[i].id;
+            item.name = message[i].name;
+            item.description = message[i].desc;
+            item.cover = staticPath + message[i].cover;
+            item.file_url = staticPath + message[i].fileUrl;
+            item.artist = '网络歌手'
+            musics.value.push(item)
         }
 
     }

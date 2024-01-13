@@ -13,7 +13,14 @@ export const useStore = defineStore(
     });
 
     const currentPaly = reactive({
-      music: "青花瓷",
+      name: "暂无播放",
+      artist: "未知歌手",
+      cover: "/default_cover.jpeg",
+      file_url: "",
+      currentTime: 0,
+      length: 0,
+      palying: false,
+      isLiked: false,
     });
 
     return { auth, theme, currentPaly };

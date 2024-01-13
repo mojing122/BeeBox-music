@@ -1,7 +1,10 @@
 <template>
   <div class="bg-white dark:bg-gray-800 h-[100vh] overflow-hidden">
     <Navbar />
-    <RouterView class="h-full overflow-scroll" />
+    <div class="h-full overflow-scroll">
+      <RouterView class="" />
+      <div class="h-[20rem]"></div>
+    </div>
     <Player class="absolute inset-x-0 bottom-0" />
   </div>
 </template>

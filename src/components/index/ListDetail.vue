@@ -57,25 +57,7 @@ const ListRef = ref({
     cover: '/imageholder/96*96.png',
     isFavourite: true,
     editable: false,
-    music_list: [{
-        music_id: 1,
-        name: ' 青花瓷',
-        artist: '周杰伦',
-        length: formatTimeTool(341),
-        is_liked: true
-    }, {
-        music_id: 2,
-        name: '稻香',
-        artist: '周杰伦',
-        length: formatTimeTool(221),
-        is_liked: false
-    }, {
-        music_id: 3,
-        name: ' 告白气球',
-        artist: '周杰伦',
-        length: formatTimeTool(316),
-        is_liked: true
-    }]
+    music_list: []
 })
 
 const favourite = () => {
@@ -95,7 +77,16 @@ post(
         ListRef.value.listlength = message.musicList.length;
         ListRef.value.isFavourite = (message.isLiked > 0) ? true : false;
         ListRef.value.editable = message.editable;
-
+        for (let music of message.musicList) {
+            let line = {};
+            line.music_id = music.id;
+            line.name = music.name;
+            line.artist = music.artistId;
+            line.length = formatTimeTool(music.length);
+            //line.isLiked = music.isLike;
+            console.log(line)
+            ListRef.value.music_list.push(line)
+        }
 
     }
 );

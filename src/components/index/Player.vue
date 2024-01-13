@@ -97,7 +97,7 @@
                         xmlns="http://www.w3.org/2000/svg" p-id="6184" width="24" height="24">
                         <path
                             d="M32 407.584a279.584 279.584 0 0 1 480-194.944 279.584 279.584 0 0 1 480 194.944 278.144 278.144 0 0 1-113.024 224.512L562.592 892.8a96 96 0 0 1-124.416-1.952l-308.16-270.688A278.976 278.976 0 0 1 32 407.584z"
-                            fill="currentColor" p-id="6185"></path>
+                            fill="#F56C6C" p-id="6185"></path>
                     </svg>
                     <svg v-if="!state.isLiked" t="1704882684858" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="6357" width="24" height="24">
@@ -113,17 +113,11 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useStore } from "../../stores/index.js";
 
-const state = ref({
-    name: 'One Last Kiss',
-    artist: '宇多田ヒカル',
-    cover: 'https://imgcache.dealmoon.com/thumbimg.dealmoon.com/dealmoon/b47/c7f/76a/452b155eeb7f78558fb6620.jpg_0_0_1_8991.jpg',
-    file_url: 'http://music.163.com/song/media/outer/url?id=1950674547.mp3',
-    currentTime: 0,
-    length: 0,
-    palying: false,
-    isLiked: true
-})
+const store = useStore();
+
+const state = ref(store.currentPaly)
 
 
 /**
@@ -191,6 +185,7 @@ onMounted(() => {
     if (audio) { // 检查audio是否为null 
         audio.addEventListener("loadedmetadata", function () {
             state.value.length = audio.duration; // 设置进度条
+            audio.play();
         });
         audio.addEventListener('play', () => {
             state.value.palying = true;
