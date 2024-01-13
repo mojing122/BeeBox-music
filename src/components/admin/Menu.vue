@@ -1,7 +1,7 @@
 <template>
     <div class="h-[100vh] border-r-2 border-gray-100">
         <div class="relative my-4 ml-4 flex items-center gap-x-4">
-            <img src="/imageholder/40*40.png" alt="" class="h-10 w-10 rounded-full bg-gray-50" />
+            <img src="/imageholder/40_40.png" alt="" class="h-10 w-10 rounded-full bg-gray-50" />
             <div class="text-sm leading-6">
                 <p class="font-semibold text-gray-900">
                     <a>

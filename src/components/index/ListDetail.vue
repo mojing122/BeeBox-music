@@ -54,7 +54,7 @@ const ListRef = ref({
     name: '推荐歌单',
     description: '编辑精选推荐',
     listlength: 3,
-    cover: '/imageholder/96*96.png',
+    cover: '/imageholder/96_96.png',
     isFavourite: true,
     editable: false,
     music_list: []
