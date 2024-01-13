@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <tr v-for="music in  musics " :key="music.id">
+                    <tr v-for="music in  musics " :key="music.music_id">
                         <td @click="PlayMusic(music)" class="py-4 pr-3 text-sm font-medium sm:w-auto sm:max-w-none ">
                             {{ music.name }}
                         </td>
@@ -88,6 +88,8 @@ import {
     HeartIcon as HeartIconSolid,
 } from "@heroicons/vue/24/solid";
 import { useStore } from "@/stores/index.js";
+import { get, post } from "@/axios/index.js";
+
 
 const store = useStore();
 
@@ -99,8 +101,19 @@ const PlayMusic = (item) => {
     store.currentPaly.file_url = item.file_url;
 }
 
+/**
+ * 点赞/取消点赞
+ */
 const like = (music) => {
-    music.is_liked = !music.is_liked;
+    post('/api/music/like-or-cancel-like',
+        {
+            musicId: music.music_id,
+            flag: !music.is_liked
+        },
+        (message) => {
+            music.is_liked = !music.is_liked;
+        })
+
 }
 
 </script>

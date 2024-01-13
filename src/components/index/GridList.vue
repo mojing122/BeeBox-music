@@ -14,7 +14,7 @@
                 {{
                     item.name }}
             </p>
-            <p class="pointer-events-none block text-sm font-medium text-gray-500">{{ item.description }}</p>
+            <p class="pointer-events-none block truncate text-sm font-medium text-gray-500">{{ item.description }}</p>
         </li>
     </ul>
 </template>

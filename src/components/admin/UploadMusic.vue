@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-10">
+    <div class="mt-10 w-full mr-4 sm:mr-20">
         <el-form :model="form" label-width="120px">
             <el-form-item label="音乐名">
                 <el-input v-model="form.name" />

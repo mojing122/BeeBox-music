@@ -24,16 +24,23 @@ defineProps(['List'])
 
 import router from "@/router";
 import { useStore } from "@/stores/index.js";
+import { post } from "../../axios";
+const staticPath = 'http://localhost:8080'
 
 const store = useStore();
 
 const PlayMusic = (item) => {
-    store.currentPaly.id = item.id;
-    store.currentPaly.name = item.name;
-    store.currentPaly.artist = item.artist;
-    store.currentPaly.cover = item.cover;
-    store.currentPaly.file_url = item.file_url;
-    store.currentPaly.isLiked = item.is_liked
+    post('/api/music/get-music-by-id', {
+        music_id: item.id
+    }, (message) => {
+        store.currentPaly.id = message.id;
+        store.currentPaly.name = message.name;
+        store.currentPaly.artist = message.artist;
+        store.currentPaly.cover = staticPath + message.cover;
+        store.currentPaly.file_url = staticPath + message.fileUrl;
+        store.currentPaly.isLiked = message.isLiked
+    });
+
 }
 
 </script>

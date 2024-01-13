@@ -83,7 +83,8 @@ post(
             item.description = message[i].desc;
             item.cover = staticPath + message[i].cover;
             item.file_url = staticPath + message[i].fileUrl;
-            item.artist = message[i].artist
+            item.is_liked = message[i].isLiked;
+            item.artist = message[i].artist;
             musics.value.push(item)
         }
 

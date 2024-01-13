@@ -114,6 +114,8 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useStore } from "../../stores/index.js";
+import { get, post } from "../../axios/index.js";
+import { ElMessage } from 'element-plus'
 
 const store = useStore();
 
@@ -150,7 +152,15 @@ const changeTime = () => {
  * 点赞/取消点赞
  */
 const like = () => {
-    state.value.isLiked = !state.value.isLiked;
+    post('/api/music/like-or-cancel-like',
+        {
+            musicId: state.value.id,
+            flag: !state.value.isLiked
+        },
+        (message) => {
+            state.value.isLiked = !state.value.isLiked;
+        })
+
 }
 
 const skip10Second = () => {
