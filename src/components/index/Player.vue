@@ -31,7 +31,7 @@
         </div>
         <div class="bg-slate-50 text-slate-500 dark:bg-slate-600 dark:text-slate-200 rounded-b-xl flex items-center">
             <div class="flex-auto flex items-center justify-evenly">
-                <button type="button" aria-label="Add to favorites">
+                <button type="button" aria-label="Add to favorites" @click="dialogFormVisible = true;">
                     <svg width="24" height="24">
                         <path d="M7 6.931C7 5.865 7.853 5 8.905 5h6.19C16.147 5 17 5.865 17 6.931V19l-5-4-5 4V6.931Z"
                             fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -108,6 +108,19 @@
                 </button>
             </div>
         </div>
+        <el-dialog v-model="dialogFormVisible" title="加入歌单" class="dark:bg-gray-100">
+            <el-radio-group v-for="list in lists" v-model="listChoice" text-color="#409EFF" class="ml-4 flex flex-col">
+                <el-radio :label="list.id" size="large" class="w-[400px] ml-2">{{ list.name }}</el-radio>
+            </el-radio-group>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取消</el-button>
+                    <el-button type="success" @click="dialogFormVisible = false;">
+                        确定
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
 
@@ -121,6 +134,22 @@ const store = useStore();
 
 const state = ref(store.currentPaly)
 
+const dialogFormVisible = ref(false)
+const listChoice = ref(1)
+
+const lists = ref<{ id: number; name: string; }[]>([])
+get(
+    "/api/playlist/show-my-favourite-playlist",
+    (message: any[]) => {
+        for (let i = 0; i < message.length; i++) {
+            let item = { id: 0, name: '' }
+            item.id = message[i].id;
+            item.name = message[i].name;
+            lists.value.push(item)
+        }
+    }
+
+);
 
 /**
  * 播放
@@ -152,7 +181,7 @@ const changeTime = () => {
  * 点赞/取消点赞
  */
 const like = () => {
-    post('/api/music/like-or-cancel-like',
+    post('/api/music/like-or-cancel-like-music',
         {
             musicId: state.value.id,
             flag: !state.value.isLiked
@@ -176,8 +205,6 @@ const rewind10Second = () => {
     if (state.value.currentTime < 0) { state.value.currentTime = 0; }
     audio.currentTime = state.value.currentTime;
 }
-
-const currentTime = ref(0)
 
 const formatTooltip = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
@@ -213,4 +240,13 @@ onMounted(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.el-radio__input.is-checked .el-radio__inner {
+    border-color: #409EFF !important;
+    background: #409EFF !important;
+}
+
+.el-radio__input.is-checked+.el-radio__label {
+    color: #5b632b !important;
+}
+</style>

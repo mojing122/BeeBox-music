@@ -44,9 +44,8 @@
       </div>
       <PopoverGroup class="hidden lg:flex lg:gap-x-12">
         <a href="javascript:void(0)" @click="router.push('/index')" class="text-xl font-semibold leading-6">首页</a>
-        <a href="javascript:void(0)" @click="router.push('/musicPlayback')"
-          class="text-xl font-semibold leading-6">歌单专区</a>
-        <a href="#" class="text-xl font-semibold leading-6">音乐广场</a>
+        <a href="javascript:void(0)" @click="router.push('/listsPark')" class="text-xl font-semibold leading-6">歌单专区</a>
+        <a href="javascript:void(0)" @click="router.push('/musicsPark')" class="text-xl font-semibold leading-6">音乐广场</a>
         <a href="#" class="text-xl font-semibold leading-6">乐评</a>
       </PopoverGroup>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -90,11 +89,21 @@
             leave-to-class="transform opacity-0 scale-95">
             <MenuItems
               class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white dark:bg-slate-500 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <p :class="[
+                active ? 'bg-gray-300 dark:bg-gray-200' : '',
+                'block px-4 py-2 text-gray-700 dark:text-gray-200 border-b-[0.5px]',
+              ]">Hello,{{ store.auth.user.username }}</p>
               <MenuItem v-slot="{ active }">
               <a href="#" :class="[
                 active ? 'bg-gray-100 dark:bg-gray-400' : '',
                 'block px-4 py-2 text-sm text-gray-700 dark:text-gray-200',
               ]">个人主页</a>
+              </MenuItem>
+              <MenuItem v-slot="{ active }">
+              <a href="javascript:void(0)" @click="router.push('/myLists')" :class="[
+                active ? 'bg-gray-100 dark:bg-gray-400' : '',
+                'block px-4 py-2 text-sm text-gray-700 dark:text-gray-200',
+              ]">我创建的歌单</a>
               </MenuItem>
               <MenuItem v-slot="{ active }">
               <a href="#" :class="[
@@ -134,9 +143,9 @@
             <div class="space-y-2 py-6">
               <a href="javascript:void(0)" @click="router.push('/index'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">首页</a>
-              <a href="javascript:void(0)" @click="router.push('/musicPlayback'); mobileMenuOpen = false"
+              <a href="javascript:void(0)" @click="router.push('/listsPark'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">歌单专区</a>
-              <a href="#"
+              <a href="javascript:void(0)" @click="router.push('/musicsPark'); mobileMenuOpen = false"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">音乐广场</a>
               <a href="#"
                 class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">乐评</a>
@@ -149,6 +158,8 @@
         </div>
       </DialogPanel>
     </Dialog>
+
+
   </header>
 </template>
 
@@ -174,6 +185,7 @@ import { get, post } from "@/axios/index.js"
 import router from "@/router/index.js";
 
 const store = useStore();
+
 const logout = () => {
   get('/api/auth/logout', (message) => {
     ElMessage.success(message)

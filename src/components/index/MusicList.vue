@@ -95,17 +95,19 @@ const store = useStore();
 
 const PlayMusic = (item) => {
     console.log(item)
+    store.currentPaly.id = item.music_id;
     store.currentPaly.name = item.name;
     store.currentPaly.artist = item.artist;
     store.currentPaly.cover = item.cover;
     store.currentPaly.file_url = item.file_url;
+    store.currentPaly.isLiked = item.is_liked;
 }
 
 /**
  * 点赞/取消点赞
  */
 const like = (music) => {
-    post('/api/music/like-or-cancel-like',
+    post('/api/music/like-or-cancel-like-music',
         {
             musicId: music.music_id,
             flag: !music.is_liked

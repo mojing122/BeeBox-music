@@ -31,9 +31,9 @@
                 <label v-if="!ImgDisplay" for="CoverInput" @drop.prevent="onDrop" @dragover.prevent=""
                     class="md:mx-0 mx-auto mt-4 mb-6 flex flex-col items-center justify-center w-full max-w-[200px] h-[200px] text-center p-3 border-2 border-dashed border-gray-300 rounded-lg hover:bg-gray-100 cursor-pointer">
                     <div class="mt-4 text-[13px]">选择上传封面图片</div>
-                    <div class="mt-2 text-gray-400 text-sm">JPG格式</div>
+                    <div class="mt-2 text-gray-400 text-sm">JPG/PNG格式</div>
                     <div class="mt-2 text-gray-400 text-sm">文件小于5MB</div>
-                    <input ref="CoverFile" type="file" id="CoverInput" @input="onImgChange" hidden accept=".jpg" />
+                    <input ref="CoverFile" type="file" id="CoverInput" @input="onImgChange" hidden accept=".jpg,.png" />
                 </label>
                 <div v-else
                     class="md:mx-0 mx-auto mt-4 md:mb-12 mb-16 flex items-center justify-center w-full max-w-[200px] h-[200px] p-3 rounded-2xl cursor-pointer relative">

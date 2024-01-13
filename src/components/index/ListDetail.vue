@@ -26,6 +26,12 @@
                                 <p v-else>取消收藏</p>
                             </button>
                         </div>
+                        <div class="ml-4" v-else>
+                            <button type="button" @click="deleteList()"
+                                class="px-2 py-4 w-[80px] rounded-md font-bold  bg-red-600 text-white">
+                                <p>删除歌单</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,12 +51,14 @@ import { ref } from "vue";
 import formatTimeTool from "@/tools/timeTools.js"
 import MusicList from '@/components/index/MusicList.vue'
 import { get, post } from "@/axios/index.js";
+import { ElMessage } from "element-plus";
 const staticPath = 'http://localhost:8080'
 
 const listId = router.currentRoute.value.query['id'];
 
 
 const ListRef = ref({
+    id: listId,
     name: '推荐歌单',
     description: '编辑精选推荐',
     listlength: 3,
@@ -59,10 +67,6 @@ const ListRef = ref({
     editable: false,
     music_list: []
 })
-
-const favourite = () => {
-    ListRef.value.isFavourite = !ListRef.value.isFavourite;
-}
 
 post(
     "/api/playlist/get-music-by-playlistid",
@@ -92,6 +96,30 @@ post(
 
     }
 );
+
+const favourite = () => {
+
+    post('/api/playlist/like-or-cancel-like-musicsheet',
+        {
+            playlistId: ListRef.value.id,
+            flag: !ListRef.value.isFavourite
+        },
+        (message) => {
+            ListRef.value.isFavourite = !ListRef.value.isFavourite;
+        })
+
+}
+
+const deleteList = () => {
+
+    post('/api/playlist/delete-playlist', {
+        playlistId: ListRef.value.id
+    }, (message) => {
+        ElMessage.success('删除成功');
+        router.back();
+    })
+
+}
 
 
 

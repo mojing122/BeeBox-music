@@ -37,9 +37,24 @@ const router = createRouter({
           component: () => import("@/components/index/HomePage.vue"),
         },
         {
-          path: "/musicPlayback",
-          name: "MusicPlayback",
-          component: () => import("@/components/index/MusicPlayback.vue"),
+          path: "/searchResult",
+          name: "SearchResult",
+          component: () => import("@/components/index/SearchResult.vue"),
+        },
+        {
+          path: "/listsPark",
+          name: "ListsPark",
+          component: () => import("@/components/index/ListsPark.vue"),
+        },
+        {
+          path: "/musicsPark",
+          name: "MusicsPark",
+          component: () => import("@/components/index/MusicsPark.vue"),
+        },
+        {
+          path: "/myLists",
+          name: "MyLists",
+          component: () => import("@/components/index/MyLists.vue"),
         },
         {
           path: "/listDetail/",
