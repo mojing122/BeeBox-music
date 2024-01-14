@@ -2,7 +2,7 @@
     <div>
         <div class="max-w-7xl mx-auto text-gray-800 dark:text-gray-200">
             <div class="flex mx-[20px] items-baseline justify-between pt-16 pb-6">
-                <h1 class="text-4xl font-bold tracking-tight">所有歌单</h1>
+                <h1 class="text-4xl font-bold tracking-tight">我创建的歌单</h1>
                 <div class="flex items-center">
                     <button @click="dialogFormVisible = true" type="button" class="text-gray-600 dark:text-gray-400">
                         <span

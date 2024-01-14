@@ -1,6 +1,6 @@
 <template>
     <div class="mx-auto max-w-7xl p-4 lg:px-8">
-        <audio :src="state.file_url" id="music-player"></audio>
+        <audio ref="audioRef" :src="state.file_url" id="music-player"></audio>
         <div
             class="bg-gray-100 border-slate-100 dark:bg-slate-700 dark:border-slate-500 border-b rounded-t-xl p-4 pb-2 space-y-6">
             <div class="flex items-center space-x-4">
@@ -115,7 +115,7 @@
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogFormVisible = false">取消</el-button>
-                    <el-button type="success" @click="dialogFormVisible = false;">
+                    <el-button type="success" @click="dialogFormVisible = false; addToList(listChoice)">
                         确定
                     </el-button>
                 </span>
@@ -130,6 +130,8 @@ import { useStore } from "../../stores/index.js";
 import { get, post } from "../../axios/index.js";
 import { ElMessage } from 'element-plus'
 
+const audioRef = ref<HTMLAudioElement>();
+
 const store = useStore();
 
 const state = ref(store.currentPaly)
@@ -139,7 +141,7 @@ const listChoice = ref(1)
 
 const lists = ref<{ id: number; name: string; }[]>([])
 get(
-    "/api/playlist/show-my-favourite-playlist",
+    "/api/playlist/show-the-playlist-I-created",
     (message: any[]) => {
         for (let i = 0; i < message.length; i++) {
             let item = { id: 0, name: '' }
@@ -155,26 +157,35 @@ get(
  * 播放
  */
 const play = () => {
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-    state.value.palying = true;
-    audio.play();
+    if (audioRef.value && audioRef.value.play) {
+        audioRef.value.play();
+        state.value.palying = true;
+    } else {
+        console.error('没有audio对象');
+    }
 }
 
 /**
  * 暂停
  */
 const pause = () => {
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-    state.value.palying = false;
-    audio.pause();
+    if (audioRef.value && audioRef.value.pause) {
+        audioRef.value.pause();
+        state.value.palying = false;
+    } else {
+        console.error('没有audio对象');
+    }
 }
 
 /**
  * 进度条拖动
  */
 const changeTime = () => {
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-    audio.currentTime = state.value.currentTime;
+    if (audioRef.value) {
+        audioRef.value.currentTime = state.value.currentTime;
+    } else {
+        console.error('没有audio对象');
+    }
 }
 
 /**
@@ -192,18 +203,42 @@ const like = () => {
 
 }
 
+
+/**
+ * 加入歌单
+ */
+const addToList = (listId) => {
+    post('/api/playlist/add-music-to-list',
+        {
+            musicId: state.value.id,
+            playlistId: listId,
+            flag: true
+        },
+        (message) => {
+            ElMessage.success('成功添加到歌单')
+        })
+
+}
+
 const skip10Second = () => {
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-    state.value.currentTime = audio.currentTime + 10;
-    if (state.value.currentTime > state.value.length) { state.value.currentTime = state.value.length; }
-    audio.currentTime = state.value.currentTime;
+    if (audioRef.value) {
+        state.value.currentTime = audioRef.value.currentTime + 10;
+        if (state.value.currentTime > state.value.length) { state.value.currentTime = 0; }
+        audioRef.value.currentTime = state.value.currentTime;
+    } else {
+        console.error('没有audio对象');
+    }
 }
 
 const rewind10Second = () => {
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-    state.value.currentTime = audio.currentTime - 10;
-    if (state.value.currentTime < 0) { state.value.currentTime = 0; }
-    audio.currentTime = state.value.currentTime;
+    if (audioRef.value) {
+        state.value.currentTime = audioRef.value.currentTime - 10;
+        if (state.value.currentTime < 0) { state.value.currentTime = 0; }
+        audioRef.value.currentTime = state.value.currentTime;
+    } else {
+        console.error('没有audio对象');
+    }
+
 }
 
 const formatTooltip = (seconds: number) => {
@@ -213,29 +248,33 @@ const formatTooltip = (seconds: number) => {
 }
 
 
-
 onMounted(() => {
+    state.value.palying = false;
 
-    const audio = document.querySelector('#music-player') as HTMLMediaElement;
-
-    if (audio) { // 检查audio是否为null 
-        audio.addEventListener("loadedmetadata", function () {
-            state.value.length = audio.duration; // 设置进度条
-            audio.play();
+    if (audioRef.value) {
+        audioRef.value.addEventListener("loadedmetadata", function () {
+            if (audioRef.value) {
+                state.value.length = audioRef.value.duration; // 设置进度条
+                audioRef.value.play();
+            }
         });
-        audio.addEventListener('play', () => {
+        audioRef.value.addEventListener('play', () => {
             state.value.palying = true;
         });
-        audio.addEventListener('pause', () => {
+        audioRef.value.addEventListener('pause', () => {
             state.value.palying = false;
         });
 
         setInterval(() => {
-            state.value.currentTime = audio.currentTime
+            if (audioRef.value) {
+                state.value.currentTime = audioRef.value.currentTime;
+            }
+
         }, 1000);
     } else {
-        console.error('播放器不存在');
+        console.error('没有audio对象');
     }
+
 })
 
 </script>

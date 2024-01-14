@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row">
         <Menu />
-        <RouterView />
+        <RouterView class="w-full p-10" />
     </div>
 </template>
 

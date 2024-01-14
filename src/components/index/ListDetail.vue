@@ -19,18 +19,20 @@
                             </div>
                             <p class="mt-1  text-gray-500">{{ ListRef.listlength }}首音乐</p>
                         </div>
-                        <div class="ml-4" v-if="!ListRef.editable">
-                            <button type="button" @click="favourite()" class="px-2 py-4 w-[80px] rounded-md font-bold"
-                                :class="ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
-                                <p v-if="!ListRef.isFavourite">收藏歌单</p>
-                                <p v-else>取消收藏</p>
-                            </button>
-                        </div>
-                        <div class="ml-4" v-else>
-                            <button type="button" @click="deleteList()"
-                                class="px-2 py-4 w-[80px] rounded-md font-bold  bg-red-600 text-white">
-                                <p>删除歌单</p>
-                            </button>
+                        <div v-if="isLoaded">
+                            <div class="ml-4" v-if="!ListRef.editable">
+                                <button type="button" @click="favourite()" class="px-2 py-4 w-[80px] rounded-md font-bold"
+                                    :class="ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
+                                    <p v-if="!ListRef.isFavourite">收藏歌单</p>
+                                    <p v-else>取消收藏</p>
+                                </button>
+                            </div>
+                            <div class="ml-4" v-else>
+                                <button type="button" @click="deleteList()"
+                                    class="px-2 py-4 w-[80px] rounded-md font-bold  bg-red-600 text-white">
+                                    <p>删除歌单</p>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -40,7 +42,7 @@
             </div>
 
 
-            <MusicList :musics="ListRef.music_list" :editable=ListRef.editable />
+            <MusicList :musics="ListRef.music_list" :editable=ListRef.editable @update:musics="updateMusics" />
         </div>
     </div>
 </template>
@@ -51,11 +53,11 @@ import { ref } from "vue";
 import formatTimeTool from "@/tools/timeTools.js"
 import MusicList from '@/components/index/MusicList.vue'
 import { get, post } from "@/axios/index.js";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 const staticPath = 'http://localhost:8080'
 
 const listId = router.currentRoute.value.query['id'];
-
+const isLoaded = ref(false)
 
 const ListRef = ref({
     id: listId,
@@ -74,7 +76,6 @@ post(
         playlistId: listId
     },
     (message) => {
-        console.log(message)
         ListRef.value.name = message.name;
         ListRef.value.cover = staticPath + message.cover;
         ListRef.value.description = message.description;
@@ -90,9 +91,9 @@ post(
             line.is_liked = music.isLiked;
             line.file_url = staticPath + music.fileUrl;
             line.cover = staticPath + music.cover;
-            console.log(line)
             ListRef.value.music_list.push(line)
         }
+        isLoaded.value = true;
 
     }
 );
@@ -112,15 +113,35 @@ const favourite = () => {
 
 const deleteList = () => {
 
-    post('/api/playlist/delete-playlist', {
-        playlistId: ListRef.value.id
-    }, (message) => {
-        ElMessage.success('删除成功');
-        router.back();
-    })
+    ElMessageBox.confirm(
+        '确认要删除歌单吗，此动作不可逆?',
+        '警告',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            post('/api/playlist/delete-playlist', {
+                playlistId: ListRef.value.id
+            }, (message) => {
+                ElMessage.success('删除成功');
+                router.back();
+            })
+        })
+        .catch(() => {
+
+        })
+
+
 
 }
 
+const updateMusics = (newMusics) => {
+    console.log(newMusics)
+    //this.musics = newMusics; // 更新 musics 的值  
+}
 
 
 </script>

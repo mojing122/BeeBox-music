@@ -70,8 +70,13 @@ const router = createRouter({
       children: [
         {
           path: "",
-          name: "AdminHome",
-          component: () => import("@/components/admin/AdminHome.vue"),
+          name: "PlayListManage",
+          component: () => import("@/components/admin/PlayListManage.vue"),
+        },
+        {
+          path: "/admin/musicManage",
+          name: "MusicManage",
+          component: () => import("@/components/admin/MusicManage.vue"),
         },
         {
           path: "/admin/uploadMusic",

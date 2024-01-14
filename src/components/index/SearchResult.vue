@@ -2,7 +2,7 @@
     <div>
         <div class="max-w-7xl lg:mx-auto text-gray-800 dark:text-gray-200 mx-10">
 
-            <div class="text-4xl font-extrabold ml-8 mt-10 pb-2 border-b-[1px] ">搜索结果</div>
+            <div class="text-4xl font-extrabold ml-8 mt-10 pb-2 border-b-[1px] ">『{{ keyword }}』搜索结果</div>
 
 
             <MusicList :musics="ListRef" :editable=false />

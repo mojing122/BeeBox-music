@@ -44,7 +44,8 @@
                                         <MenuItems
                                             class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                             <div class="py-1">
-                                                <MenuItem v-slot="{ active }" v-if="editable">
+                                                <MenuItem v-slot="{ active }" v-if="editable"
+                                                    @click="deleteFromList(music)">
                                                 <a href="#"
                                                     :class="[active ? 'bg-gray-100 text-red-400' : 'text-red-500', 'block px-4 py-2 text-sm']">
                                                     从歌单删除</a>
@@ -89,12 +90,14 @@ import {
 } from "@heroicons/vue/24/solid";
 import { useStore } from "@/stores/index.js";
 import { get, post } from "@/axios/index.js";
+import router from '@/router/index.js'
+import { onMounted } from 'vue';
 
+import { ref, getCurrentInstance } from 'vue';
 
 const store = useStore();
 
 const PlayMusic = (item) => {
-    console.log(item)
     store.currentPaly.id = item.music_id;
     store.currentPaly.name = item.name;
     store.currentPaly.artist = item.artist;
@@ -117,5 +120,32 @@ const like = (music) => {
         })
 
 }
+
+
+const props = getCurrentInstance().props;
+
+/**
+     * 从歌单中删除
+     */
+const deleteFromList = (music) => {
+    const listId = router.currentRoute.value.query['id'];
+    post('/api/playlist/add-music-to-list',
+        {
+            musicId: music.music_id,
+            playlistId: listId,
+            flag: false
+        },
+        (message) => {
+            location.reload();
+        })
+
+}
+
+onMounted(() => {
+
+
+
+})
+
 
 </script>
