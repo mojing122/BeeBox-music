@@ -108,9 +108,11 @@
                 </button>
             </div>
         </div>
-        <el-dialog v-model="dialogFormVisible" title="加入歌单" class="dark:bg-gray-100">
-            <el-radio-group v-for="list in lists" v-model="listChoice" text-color="#409EFF" class="ml-4 flex flex-col">
-                <el-radio :label="list.id" size="large" class="w-[400px] ml-2">{{ list.name }}</el-radio>
+        <el-dialog v-model="dialogFormVisible" title="加入歌单" class="dark:bg-gray-100" width="60%">
+            <el-radio-group v-for="list in lists" v-model="listChoice" text-color="#409EFF" class="ml-2 flex flex-col">
+                <el-radio :label="list.id" size="large" class="ml-2">
+                    <p class="w-[35vw] sm:w-[45vw] truncate">{{ list.name }}</p>
+                </el-radio>
             </el-radio-group>
             <template #footer>
                 <span class="dialog-footer">
