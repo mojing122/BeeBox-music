@@ -1,5 +1,5 @@
 <template>
-    <div class="h-[100vh] border-r-2 border-gray-100">
+    <div class="relative h-[100vh] border-r-2 border-gray-100">
         <div class="relative my-4 ml-4 flex items-center gap-x-4">
             <img src="/imageholder/40_40.png" alt="" class="h-10 w-10 rounded-full bg-gray-50" />
             <div class="text-sm leading-6">
@@ -34,10 +34,13 @@
                 <span>用户管理</span>
             </el-menu-item>
         </el-menu>
+        <el-button class="absolute inset-x-0 bottom-0 m-10" @click="logout">登出</el-button>
     </div>
 </template>
 
 <script setup>
+import { get, post } from "@/axios/index.js";
+import { ElMessage } from "element-plus";
 import {
     Document,
     Menu as IconMenu,
@@ -51,6 +54,15 @@ import { useStore } from "@/stores/index.js";
 
 const store = useStore();
 
+const logout = () => {
+    get('/api/auth/logout', (message) => {
+        ElMessage.success(message)
+        store.auth.user = null
+        sessionStorage.removeItem('user');
+        localStorage.removeItem('user');
+        router.push('/')
+    })
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -57,6 +57,11 @@ const router = createRouter({
           component: () => import("@/components/index/MyLists.vue"),
         },
         {
+          path: "/myFavLists",
+          name: "MyFavLists",
+          component: () => import("@/components/index/MyFavLists.vue"),
+        },
+        {
           path: "/listDetail/",
           name: "ListDetail",
           component: () => import("@/components/index/ListDetail.vue"),
@@ -88,19 +93,26 @@ const router = createRouter({
   ],
 });
 
-/**
 router.beforeEach((to, from, next) => {
   const store = useStore();
   if (store.auth.user != null && to.name.startsWith("welcome-")) {
-    next("/index");
-  } else if (store.auth.user == null && to.fullPath.startsWith("/index")) {
+    if (store.auth.user.accountrole == "user") next("/index");
+    if (store.auth.user.accountrole == "admin") next("/admin");
+  } else if (
+    store.auth.user == null &&
+    (to.fullPath.startsWith("/index") || to.fullPath.startsWith("/admin"))
+  ) {
     next("/");
   } else if (to.matched.length === 0) {
+    next("/index");
+  } else if (
+    to.path.startsWith("/admin") &&
+    store.auth.user.accountrole != "admin"
+  ) {
     next("/index");
   } else {
     next();
   }
 });
- */
 
 export default router;

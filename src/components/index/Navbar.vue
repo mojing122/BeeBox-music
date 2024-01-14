@@ -190,6 +190,8 @@ const logout = () => {
   get('/api/auth/logout', (message) => {
     ElMessage.success(message)
     store.auth.user = null
+    sessionStorage.removeItem('user');
+    localStorage.removeItem('user');
     router.push('/')
   })
 }

@@ -89,7 +89,10 @@ const login = () => {
           "/api/user/get-user-info",
           (message) => {
             store.auth.user = message;
-            router.push("/index");
+            if (message.accountrole == 'user')
+              router.push("/index");
+            if (message.accountrole == 'admin')
+              router.push("/admin")
           },
           () => {
             store.auth.user = null;

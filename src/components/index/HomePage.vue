@@ -31,7 +31,7 @@
                 <h1 class="text-4xl font-bold tracking-tight">收藏歌单</h1>
                 <div class="flex items-center">
                     <button type="button" class="text-gray-600 dark:text-gray-400">
-                        <span class="">浏览更多></span>
+                        <span class="" @click="router.push('/myFavLists')">浏览更多></span>
                     </button>
                 </div>
             </div>
