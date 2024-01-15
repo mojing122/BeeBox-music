@@ -17,7 +17,10 @@ import formatTimeTool from "@/tools/timeTools.js"
 import MusicList from '@/components/index/MusicList.vue'
 import { get, post } from "@/axios/index.js";
 import { ElMessage } from "element-plus";
-const staticPath = 'http://localhost:8080'
+import { getCurrentInstance } from "vue";
+
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const keyword = router.currentRoute.value.query['keyword'];
 

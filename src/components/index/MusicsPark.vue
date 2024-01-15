@@ -53,8 +53,10 @@ import { get, post } from "@/axios/index.js";
 import { ref } from 'vue';
 import router from "@/router/index.js";
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/vue/20/solid'
+import { getCurrentInstance } from "vue";
 
-const staticPath = 'http://localhost:8080';
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const musics = ref([]);
 const keyword = ref('')

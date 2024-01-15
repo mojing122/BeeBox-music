@@ -88,6 +88,11 @@ const router = createRouter({
           name: "UploadMusic",
           component: () => import("@/components/admin/UploadMusic.vue"),
         },
+        {
+          path: "/admin/accountManage",
+          name: "accountManage",
+          component: () => import("@/components/admin/AccountManage.vue"),
+        },
       ],
     },
   ],

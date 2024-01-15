@@ -5,10 +5,10 @@
             <el-table-column fixed prop="id" label="ID" width="60" />
             <el-table-column prop="name" label="歌单名" width="120" />
             <el-table-column prop="description" label="描述" width="160" />
-            <el-table-column prop="creatorid" label="创建者(ID)" width="60" />
+            <el-table-column prop="creatorid" label="创建者(ID)" width="100" />
             <el-table-column prop="createTime" label="创建时间" width="120" />
             <el-table-column prop="updateTime" label="更新时间" width="120" />
-            <el-table-column fixed="right" label="Operations" width="140">
+            <el-table-column fixed="right" label="操作" width="140">
                 <template #default="scope">
                     <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button>
                     <el-button link type="primary" size="small">编辑</el-button>

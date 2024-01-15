@@ -152,7 +152,18 @@
             </div>
             <div class="py-6">
               <a href="#"
-                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">用户</a>
+                class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">
+                欢迎你，{{ store.auth.user.username }}
+              </a>
+              <a href="javascript:void(0)" @click="router.push('/myLists')"
+                class="-mx-3 block rounded-lg px-3 py-2.5 text-sm leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">
+                我创建的歌单
+              </a>
+              <a href="javascript:void(0);" @click="logout()"
+                class="flex -mx-3 items-center rounded-lg px-3 py-2.5 text-sm leading-7 hover:bg-gray-50 dark:hover:bg-gray-500">
+                登出
+                <ArrowLeftEndOnRectangleIcon class="h-5 ml-3" />
+              </a>
             </div>
           </div>
         </div>
@@ -174,6 +185,7 @@ import {
 import {
   Bars3Icon,
   XMarkIcon,
+  ArrowLeftEndOnRectangleIcon
 } from "@heroicons/vue/24/outline";
 
 

@@ -8,7 +8,7 @@
             <el-table-column prop="artist" label="艺人" width="100" />
             <el-table-column prop="createTime" label="创建时间" width="120" />
             <el-table-column prop="updateTime" label="更新时间" width="120" />
-            <el-table-column fixed="right" label="Operations" width="120">
+            <el-table-column fixed="right" label="操作" width="120">
                 <template #default="scope">
                     <el-button link type="danger" size="small" @click="handleClickDelete(scope.row.id)">删除</el-button>
                     <el-button link type="primary" size="small">编辑</el-button>

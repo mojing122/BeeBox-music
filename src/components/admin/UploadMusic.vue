@@ -1,5 +1,6 @@
 <template>
-    <div class="mt-10 w-full mr-4 sm:mr-20">
+    <div class="mt-10 w-full mr-4 sm:mr-20" v-loading="loading" element-loading-text="上传中..."
+        element-loading-background="rgba(255, 255, 255, 0.6)">
         <el-form :model="form" label-width="120px">
             <el-form-item label="音乐名">
                 <el-input v-model="form.name" />
@@ -70,6 +71,8 @@ const CoverFileData = ref(null)
 const MusicDisplay = ref(null)
 const ImgDisplay = ref(null)
 
+const loading = ref(false)
+
 const form = ref({
     name: '',
     artist: '',
@@ -103,6 +106,8 @@ const createMusic = async () => {
         //上传
     }
 
+    loading.value = true;
+
     // 发送POST请求上传文件  
     post(
         "/api/admin/creat-music",
@@ -113,6 +118,7 @@ const createMusic = async () => {
             form.value.artist = '';
             clearImg();
             clearMusic();
+            loading.value = false;
 
         },
         "multipart/form-data"

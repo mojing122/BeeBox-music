@@ -49,11 +49,13 @@
 import GridList from '@/components/index/GridList.vue';
 import MusicGridList from './MusicGridList.vue';
 import { get, post } from "@/axios/index.js";
-import { ref } from 'vue';
+import { ref, getCurrentInstance } from 'vue';
 import router from "@/router/index.js";
 
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
-const staticPath = 'http://localhost:8080'
+console.log(staticPath)
 
 const playLists = ref([
     {
@@ -61,7 +63,7 @@ const playLists = ref([
         name: '每日推荐',
         description: '每日精选推荐',
         cover:
-            'http://localhost:8080/cover/recommend.jpg',
+            staticPath + '/cover/recommend.jpg',
     }
 
 ])

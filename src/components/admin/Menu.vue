@@ -27,7 +27,7 @@
                 <el-menu-item index="2-1" @click="router.push('/admin/musicManage')">曲库管理</el-menu-item>
                 <el-menu-item index="2-2" @click="router.push('/admin/uploadMusic')">上传音乐</el-menu-item>
             </el-sub-menu>
-            <el-menu-item index="3">
+            <el-menu-item index="3" @click="router.push('/admin/accountManage')">
                 <el-icon>
                     <setting />
                 </el-icon>

@@ -10,11 +10,18 @@ import "./assets/style/element.scss";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8080";
+
+const api = "http://localhost:8080";
+//const api = "https://music.mojing.live";
+
+axios.defaults.baseURL = api;
+axios.defaults.withCredentials = true;
 
 const app = createApp(App);
 
 app.use(router);
+
+app.config.globalProperties.$staticPath = api;
 
 // 配置Pinia持久化
 const pinia = createPinia();

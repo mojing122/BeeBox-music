@@ -25,7 +25,10 @@ defineProps(['List'])
 import router from "@/router";
 import { useStore } from "@/stores/index.js";
 import { post } from "../../axios";
-const staticPath = 'http://localhost:8080'
+import { getCurrentInstance } from "vue";
+
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const store = useStore();
 

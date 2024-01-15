@@ -19,9 +19,10 @@ import GridList from '@/components/index/GridList.vue';
 import { get, post } from "@/axios/index.js";
 import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
+import { getCurrentInstance } from "vue";
 
-const staticPath = 'http://localhost:8080'
-
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const playLists = ref([
 ])

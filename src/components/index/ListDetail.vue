@@ -49,12 +49,14 @@
 
 <script setup>
 import router from "@/router";
-import { ref } from "vue";
+import { ref, getCurrentInstance } from "vue";
 import formatTimeTool from "@/tools/timeTools.js"
 import MusicList from '@/components/index/MusicList.vue'
 import { get, post } from "@/axios/index.js";
 import { ElMessage, ElMessageBox } from "element-plus";
-const staticPath = 'http://localhost:8080'
+
+const con = getCurrentInstance();
+const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const listId = router.currentRoute.value.query['id'];
 const isLoaded = ref(false)
