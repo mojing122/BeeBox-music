@@ -1,5 +1,5 @@
 <template>
-    <div class="px-4 sm:px-6 lg:px-8 mx-4">
+    <div class="px-0 sm:px-4 lg:px-6 mx-4">
         <div class="-mx-4 mt-8 sm:-mx-0">
             <table class="min-w-full divide-y divide-gray-300">
                 <thead>
@@ -8,7 +8,7 @@
                         </th>
                         <th scope="col" class=" px-3 py-3.5 text-left text-sm font-semibold ">艺人
                         </th>
-                        <th scope="col" class=" px-3 py-3.5 text-right text-sm font-semibold">时间
+                        <th scope="col" class="hidden sm:table-cell px-3 py-3.5 text-right text-sm font-semibold">时间
                         </th>
                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">
                             <span class="sr-only">更多操作</span>
@@ -21,7 +21,7 @@
                             {{ music.name }}
                         </td>
                         <td class="px-3 py-4 text-sm text-gray-500 ">{{ music.artist }}</td>
-                        <td class="px-3 py-4 text-sm text-right text-gray-500 ">{{ music.length }}</td>
+                        <td class="hidden sm:table-cell px-3 py-4 text-sm text-right text-gray-500 ">{{ music.length }}</td>
                         <td class="flex py-4 pl-3 pr-4 float-right text-right text-sm font-medium sm:pr-0">
                             <a href="#" class="text-indigo-600 hover:text-indigo-900" @click="like(music)">
                                 <HeartIcon v-if="!music.is_liked" class="h-6 w-6" />
@@ -55,7 +55,8 @@
                                                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     查看歌曲详情</a>
                                                 </MenuItem>
-                                                <MenuItem v-slot="{ active }">
+                                                <MenuItem v-slot="{ active }"
+                                                    @click="dialogFormVisible = true; MusicChoice = music.music_id">
                                                 <a href="#"
                                                     :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">
                                                     添加到我的歌单</a>
@@ -70,6 +71,21 @@
                 </tbody>
             </table>
         </div>
+        <el-dialog v-model="dialogFormVisible" title="加入歌单" class="dark:bg-gray-100" width="60%">
+            <el-radio-group v-for="list in lists" v-model="listChoice" text-color="#409EFF" class="ml-2 flex flex-col">
+                <el-radio :label="list.id" size="large" class="ml-2">
+                    <p class="w-[35vw] sm:w-[45vw] truncate">{{ list.name }}</p>
+                </el-radio>
+            </el-radio-group>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取消</el-button>
+                    <el-button type="success" @click="dialogFormVisible = false; addToList(listChoice)">
+                        确定
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
     </div>
 </template>
   
@@ -94,8 +110,27 @@ import router from '@/router/index.js'
 import { onMounted } from 'vue';
 
 import { ref, getCurrentInstance } from 'vue';
+import { ElMessage } from 'element-plus'
 
 const store = useStore();
+
+const dialogFormVisible = ref(false)
+const listChoice = ref(1)
+const MusicChoice = ref(0);
+
+const lists = ref([])
+get(
+    "/api/playlist/show-the-playlist-I-created",
+    (message) => {
+        for (let i = 0; i < message.length; i++) {
+            let item = { id: 0, name: '' }
+            item.id = message[i].id;
+            item.name = message[i].name;
+            lists.value.push(item)
+        }
+    }
+
+);
 
 const PlayMusic = (item) => {
     store.currentPaly.id = item.music_id;
@@ -121,6 +156,22 @@ const like = (music) => {
 
 }
 
+
+/**
+ * 加入歌单
+ */
+const addToList = (listId) => {
+    post('/api/playlist/add-music-to-list',
+        {
+            musicId: MusicChoice.value,
+            playlistId: listId,
+            flag: true
+        },
+        (message) => {
+            ElMessage.success('成功添加到歌单')
+        })
+
+}
 
 const props = getCurrentInstance().props;
 

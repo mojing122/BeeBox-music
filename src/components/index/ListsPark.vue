@@ -23,13 +23,7 @@ const con = getCurrentInstance();
 const staticPath = con.appContext.config.globalProperties.$staticPath;
 
 const playLists = ref([
-    {
-        id: 1,
-        name: '每日推荐',
-        description: '每日精选推荐',
-        cover:
-            staticPath + '/cover/recommend.jpg',
-    }
+
 
 ])
 
