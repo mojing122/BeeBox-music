@@ -1,5 +1,9 @@
 import axios from "axios";
 import { ElMessage } from "element-plus";
+import router from "@/router";
+import { useStore } from "@/stores/index.js";
+
+const store = useStore();
 
 axios.defaults.withCredentials = true;
 
@@ -31,7 +35,12 @@ function post(
     })
     .then(({ data }) => {
       if (data.success) success(data.message, data.status);
-      else failure(data.message, data.status);
+      else if (data.status === 411) {
+        store.auth.user = null;
+        sessionStorage.removeItem("user");
+        localStorage.removeItem("user");
+        router.push("/");
+      } else failure(data.message, data.status);
     })
     .catch(error);
 }
@@ -50,7 +59,12 @@ function get(url, success, failure = defaultFailure, error = defaultError) {
     })
     .then(({ data }) => {
       if (data.success) success(data.message, data.status);
-      else failure(data.message, data.status);
+      else if (data.status === 411) {
+        store.auth.user = null;
+        sessionStorage.removeItem("user");
+        localStorage.removeItem("user");
+        router.push("/");
+      } else failure(data.message, data.status);
     })
     .catch(error);
 }

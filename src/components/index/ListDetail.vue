@@ -7,9 +7,9 @@
                     <img :src="ListRef.cover" class="h-24 w-24 rounded-md object-cover object-center sm:h-32 sm:w-32" />
                 </div>
 
-                <div class="ml-4 flex flex-1 flex-col sm:ml-6">
+                <div class="ml-4 flex flex-1 flex-col sm:ml-6 relative">
                     <div class="mt-4 flex flex-1 justify-between">
-                        <div>
+                        <div class="hidden sm:block">
                             <div class="flex justify-between">
                                 <h4 class="text-2xl">
                                     <p class="font-medium">{{
@@ -19,7 +19,8 @@
                             </div>
                             <p class="mt-1  text-gray-500">{{ ListRef.listlength }}首音乐</p>
                         </div>
-                        <div v-if="isLoaded">
+                        <p class="text-gray-500 text-sm absolute bottom-2 sm:hidden">{{ ListRef.listlength }}首音乐</p>
+                        <div v-if="isLoaded" class="absolute right-0">
                             <div class="ml-4" v-if="!ListRef.editable">
                                 <button type="button" @click="favourite()" class="px-2 py-4 w-[80px] rounded-md font-bold"
                                     :class="ListRef.isFavourite ? ' bg-red-400 text-white' : 'bg-primary text-indigo-400'">
@@ -37,8 +38,19 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-4 text-lg">
-                <p class="font-bold inline-block">详情：</p>{{ ListRef.description }}
+            <div class="mt-4">
+                <div class="block sm:hidden">
+                    <div class="justify-between mb-2">
+                        <h4 class="text-xl inline-block">
+                            <p class="font-medium">{{
+                                ListRef.name
+                            }}</p>
+                        </h4>
+                    </div>
+                </div>
+                <div class="text-sm">
+                    <p class="font-bold inline-block">详情：</p>{{ ListRef.description }}
+                </div>
             </div>
 
 

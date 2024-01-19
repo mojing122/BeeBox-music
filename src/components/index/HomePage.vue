@@ -55,8 +55,6 @@ import router from "@/router/index.js";
 const con = getCurrentInstance();
 const staticPath = con.appContext.config.globalProperties.$staticPath;
 
-console.log(staticPath)
-
 const playLists = ref([
     {
         id: 1,
